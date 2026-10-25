@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#101a2d" />
+  <meta name="description" content="OpenCrew is an open-weight AI copilot for event volunteer teams." />
+  <title>OpenCrew — Volunteer Operations Copilot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="OpenCrew home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>open<span class="brand-light">crew</span><small>FIELD OPS COPILOT</small></span>
+      </a>
+      <div class="top-meta"><span class="live-dot"></span><span id="backendStatus">AI BACKEND NOT CHECKED</span><span class="pill">OPEN-WEIGHT AI</span></div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="eyebrow-line"></span> LESS CHAOS. MORE COMMUNITY.</p>
+          <h1>Make every<br><em>volunteer</em> count.</h1>
+          <p class="hero-sub">A practical AI copilot for the people behind great events. Turn a messy event brief into clear shifts, fast answers, and actionable incident handoffs.</p>
+          <div class="hero-tags"><span>01 / PLAN</span><span>02 / ASK</span><span>03 / RESPOND</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="art-cross cross-a">+</div><div class="art-cross cross-b">+</div>
+          <div class="core-card"><div class="core-top"><span>CREW STATUS</span><span class="tiny-dot"></span></div><div class="core-number">03<span> / 03</span></div><div class="core-caption">OPERATIONS MODES READY</div><div class="core-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+          <div class="floating-chip chip-top"><span class="chip-icon">↗</span> CLEAR HANDOFFS</div>
+          <div class="floating-chip chip-bottom"><span class="chip-icon">✳</span> HUMAN-LED OPS</div>
+        </div>
+      </section>
+
+      <div class="workspace-grid">
+        <section class="panel context-panel">
+          <div class="panel-heading"><div><span class="step-num">01</span><h2>Event context</h2></div><span class="subtle-label">GROUND TRUTH</span></div>
+          <p class="panel-intro">Give the model the facts your team actually has. OpenCrew is instructed not to invent missing event details.</p>
+          <form id="contextForm">
+            <label for="eventName">EVENT NAME</label>
+            <input id="eventName" value="Community Tech Meetup" maxlength="100" required />
+            <div class="field-row">
+              <div><label for="eventVenue">VENUE / AREA</label><input id="eventVenue" value="Main hall + registration desk" maxlength="160" required /></div>
+              <div><label for="volunteerCount">VOLUNTEERS</label><input id="volunteerCount" type="number" min="1" max="500" value="12" required /></div>
+            </div>
+            <label for="eventSchedule">SCHEDULE & KEY RULES</label>
+            <textarea id="eventSchedule" rows="5" maxlength="3000" required>08:00 — volunteer briefing
+09:00 — doors open and registration starts
+10:00 — opening session
+13:00 — lunch distribution
+17:00 — closing and venue reset
+Rules: Only the registration lead can resolve duplicate check-ins. Keep emergency exits clear. Lost-and-found items go to the event lead. Escalate medical, safety, security, or harassment concerns to the designated event lead immediately.</textarea>
+            <label for="crewNotes">CREW NOTES <span class="optional">OPTIONAL</span></label>
+            <textarea id="crewNotes" rows="2" maxlength="1500" placeholder="Example: 3 volunteers are new; 2 can speak Tamil; one person has the venue contact number."></textarea>
+            <button class="secondary-btn" type="button" id="loadDemo">↺ Load sample scenario</button>
+          </form>
+        </section>
+
+        <section class="panel action-panel">
+          <div class="panel-heading"><div><span class="step-num">02</span><h2>Choose a mission</h2></div><span class="subtle-label">AI WORKSPACE</span></div>
+          <div class="mode-grid" role="group" aria-label="Choose an AI task">
+            <button class="mode-card selected" data-mode="plan" type="button" aria-pressed="true"><span class="mode-icon">▤</span><span class="mode-index">MISSION 01</span><strong>Build a shift plan</strong><small>Roles, timing, coverage & handoffs</small><span class="mode-arrow">↗</span></button>
+            <button class="mode-card" data-mode="ask" type="button" aria-pressed="false"><span class="mode-icon">◌</span><span class="mode-index">MISSION 02</span><strong>Ask the crew copilot</strong><small>Get answers grounded in your brief</small><span class="mode-arrow">↗</span></button>
+            <button class="mode-card" data-mode="incident" type="button" aria-pressed="false"><span class="mode-icon">◎</span><span class="mode-index">MISSION 03</span><strong>Triage an incident</strong><small>Structure facts and flag escalation</small><span class="mode-arrow">↗</span></button>
+          </div>
+          <div class="mission-input" id="missionInputWrap" hidden>
+            <label id="missionLabel" for="missionInput">YOUR QUESTION</label>
+            <textarea id="missionInput" rows="3" maxlength="1800" placeholder="Ask a specific question about the event brief..."></textarea>
+          </div>
+          <div class="privacy-note"><span>⌁</span><div><strong>Human-in-the-loop by design</strong><p>AI suggestions are drafts. Event leads make final decisions, especially for safety and access issues.</p></div></div>
+          <button id="runBtn" class="run-btn" type="button"><span class="run-symbol">✳</span><span id="runBtnText">GENERATE SHIFT PLAN</span><span class="run-arrow">→</span></button>
+          <p class="backend-hint" id="backendHint">Local mode uses Ollama. Start the model first, then run the app.</p>
+        </section>
+      </div>
+
+      <section class="output-panel" aria-live="polite">
+        <div class="output-head"><div><span class="step-num">03</span><h2>Mission output</h2></div><div class="output-meta"><span id="outputTag">AWAITING INPUT</span><button id="copyBtn" class="copy-btn" type="button" disabled>▣ COPY OUTPUT</button></div></div>
+        <div id="outputBody" class="output-body empty-state"><div class="empty-orbit">✳</div><div><strong>Your ops brief starts here.</strong><p>Choose a mission above and run it to generate an AI-assisted draft based on your event context.</p></div></div>
+        <div class="output-foot"><span><span class="live-dot"></span> MODEL-GENERATED DRAFT</span><span>VERIFY DETAILS WITH YOUR EVENT LEAD</span></div>
+      </section>
+      <section class="principles"><div><span class="principle-num">A.</span><strong>Grounded in your brief</strong><p>Event-specific context comes from your team, not assumed facts.</p></div><div><span class="principle-num">B.</span><strong>Open-weight by default</strong><p>Run a compact Qwen model locally with Ollama or use a hosted compatible model.</p></div><div><span class="principle-num">C.</span><strong>Escalate, don't improvise</strong><p>Safety incidents are routed to humans, never handled as an AI-only decision.</p></div></section>
+    </main>
+    <footer><span>OPENCREW © 2026</span><span>BUILT FOR THE PEOPLE BEHIND THE EVENT.</span><a href="README.md">PROJECT README ↗</a></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
